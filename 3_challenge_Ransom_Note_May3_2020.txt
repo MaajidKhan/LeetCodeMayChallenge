@@ -1,0 +1,88 @@
+MAY 3, 2020.
+
+CHALLENGE 3:
+Ransom Note
+
+Given an arbitrary ransom note string and another string containing letters from all the magazines, write a function that will return true if the ransom note can be constructed from the magazines ; otherwise, it will return false.
+
+Each letter in the magazine string can only be used once in your ransom note.
+
+Note:
+You may assume that both strings contain only lowercase letters.
+
+canConstruct("a", "b") -> false
+canConstruct("aa", "ab") -> false
+canConstruct("aa", "aab") -> true
+_________________________________________________________________________________________________________________________________________________________
+//This solution works only for some testcases
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        char []arr1 = ransomNote.toCharArray();
+        char []arr2 = magazine.toCharArray();
+        
+        char []count1 = new char[256];
+        char []count2 = new char[256];
+        for(int i=0; i<arr2.length; i++)
+        {
+            count1[arr2[i]]++;
+        }
+        for(int j=0; j<arr1.length; j++)
+        {
+            count2[arr1[j]]++;
+        }
+        for(int k=0; k<arr1.length;k++)
+        {
+            if(count1[arr1[k]] >= count2[arr1[k]])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+___________________________________________________________________________________________________________________________
+
+//Working Solution using HashMap in Java:
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        
+        HashMap <Character, Integer> cmap = new HashMap <Character, Integer>();
+        for (char c : magazine.toCharArray()) 
+        { 
+            if (!cmap.containsKey(c)) 
+            {
+                cmap.put(c, 1);
+            } 
+            else
+            { 
+                cmap.put(c, cmap.get(c) + 1);
+                
+                
+            } 
+        }
+        for(char c1 : ransomNote.toCharArray())
+        {
+            if(cmap.containsKey(c1) == false)
+            {
+                return false;
+            }
+            if(cmap.get(c1) == 0)
+            {
+                return false;
+            }
+            cmap.put(c1, cmap.get(c1) - 1);
+        }
+        return true;
+            
+        
+    }
+}
+
+/*
+126 / 126 test cases passed.
+Status: Accepted
+Runtime: 14 ms
+Memory Usage: 39.8 MB
+*/
