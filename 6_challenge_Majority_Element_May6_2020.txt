@@ -1,0 +1,91 @@
+MAY 6, 2020.
+
+CHALLENGE 6:
+Majority Element
+
+Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+
+You may assume that the array is non-empty and the majority element always exist in the array.
+
+Example 1:
+
+Input: [3,2,3]
+Output: 3
+Example 2:
+
+Input: [2,2,1,1,1,2,2]
+Output: 2
+
+__________________________________________________________________________________________________________________
+//This solution works only for positive numbers in an array
+class Solution {
+    public int majorityElement(int[] nums) {
+        String s="";
+        for(int c=0; c<nums.length; c++)
+        {
+            s+= nums[c];
+        }
+        char []arr = s.toCharArray();
+        int []count = new int[256];
+        for(int h=0; h<arr.length; h++)
+        {
+            count[arr[h]]++;
+        }
+        int max = 0;
+        int index = 0;
+        for(int j=0; j<arr.length;j++)
+        {
+            if(max < count[arr[j]])
+            {
+                max = count[arr[j]];
+                index = arr[j] - '0';
+            }
+        }
+        return index;
+        
+    }
+}
+_____________________________________________________________________________________________________________________________
+
+//Solution works using HashMap
+class Solution {
+    public int majorityElement(int[] nums) {
+        if(nums.length == 1)
+        {
+            return nums[0];
+        }
+        HashMap<Integer, Integer> hmap = new HashMap<Integer, Integer> ();
+        for(int i=0; i<nums.length; i++)
+        {
+            if(!hmap.containsKey(nums[i]))
+            {
+                hmap.put(nums[i], 1);
+            }
+            else
+            {
+                hmap.put(nums[i], hmap.get(nums[i]) +1);
+            }
+        }
+        int max = 0;
+        int index = 0;
+        for(int h=0; h<nums.length;h++)
+        {
+            int count = hmap.get(nums[h]);
+            if(max < count)
+            {
+                max = count;
+                index = nums[h];
+            }
+        }
+        return index;
+        
+    }
+}
+
+/*
+46 / 46 test cases passed.
+Status: Accepted
+Runtime: 8 ms
+Memory Usage: 43.3 MB
+*
+/
