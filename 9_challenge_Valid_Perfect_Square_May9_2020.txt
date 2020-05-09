@@ -1,0 +1,79 @@
+MAY 9, 2020.
+
+CHALLENGE 9:
+Valid Perfect Square
+
+Given a positive integer num, write a function which returns True if num is a perfect square else False.
+
+Note: Do not use any built-in library function such as sqrt.
+
+Example 1:
+
+Input: 16
+Output: true
+Example 2:
+
+Input: 14
+Output: false
+________________________________________________________________________________________________________________________________________________
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        if(num == 1)
+        {
+            return true;
+        }
+        for(int i=1; i<=num/2; i++)
+        {
+            if(i*i == num)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+/*
+68 / 68 test cases passed.
+Status: Accepted
+Runtime: 2695 ms
+Memory Usage: 36 MB
+*/
+_________________________________________________________________________________________________________________________________________________________________________
+//Solution using Binary Search
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        int left = 1;
+        int right = num;
+        while(left <= right)
+        {
+            int mid = left + (right - left)/2;
+            long square = (long)mid * mid;
+            if (square == num)
+            {
+                return true;
+            }
+            if (square > num)
+            {
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+        return false;
+    }
+}
+
+/*
+
+68 / 68 test cases passed.
+Status: Accepted
+Runtime: 0 ms
+Memory Usage: 35.9 MB
+
+
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Valid Perfect Square.
+Memory Usage: 36 MB, less than 6.12% of Java online submissions for Valid Perfect Square.
+*/
+_________________________________________________________________________________________________________
